@@ -1,4 +1,4 @@
-package utils;
+package tests;
 
 import com.aventstack.extentreports.*;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
