@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="DemoWebShop Suite" verbose="1" parallel="tests" thread-count="3">
+
+    <test name="Registration Tests">
+        <classes>
+            <class name="tests.RegistrationTest"/>
+        </classes>
+    </test>
+
+    <test name="Login Tests">
+        <classes>
+            <class name="tests.LoginTest"/>
+        </classes>
+    </test>
+
+    <test name="Search Tests">
+        <classes>
+            <class name="tests.SearchTest"/>
+        </classes>
+    </test>
+
+</suite>

@@ -62,7 +62,7 @@ public class ExtentReportListener implements ITestListener {
     }
     private String takeScreenshot(String testName) {
         try {
-            File srcFile = ((TakesScreenshot) BaseTest.driver).getScreenshotAs(OutputType.FILE);
+            File srcFile = ((TakesScreenshot) BaseTest.getDriver()).getScreenshotAs(OutputType.FILE);
             String path = "reports/screenshots/" + testName + "_" + System.currentTimeMillis() + ".png";
             File destFile = new File(path);
             FileUtils.copyFile(srcFile, destFile);

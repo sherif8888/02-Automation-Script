@@ -3,28 +3,30 @@ package tests;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.*;
-import org.testng.Assert;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 import java.time.Duration;
-import tests.ExtentReportListener;
 
 @Listeners(ExtentReportListener.class)
 public class RegistrationTest extends BaseTest {
 
-    @Test(dataProvider = "registrationData", dataProviderClass = TestDataProvider.class, retryAnalyzer = RetryAnalyzer.class, groups = {"registration"})
-    public void RegistrationTest( String gender, String firstName, String lastName, String email, String password,String confirmPassword, String expectedResult) {
+    @Test(dataProvider = "registrationData", dataProviderClass = TestDataProvider.class,
+            retryAnalyzer = RetryAnalyzer.class, groups = {"registration"})
+    public void RegistrationTest(String gender, String firstName, String lastName,
+                                 String email, String password, String confirmPassword,
+                                 String expectedResult) {
 
+        getDriver().get("https://demowebshop.tricentis.com/register");
 
-        driver.get("https://demowebshop.tricentis.com/register");
+        Registrationpage regPage = new Registrationpage(getDriver());
 
-        Registrationpage regPage = new Registrationpage(driver);
 
         if (gender.equalsIgnoreCase("male")) {
             regPage.selectMale();
         } else {
             regPage.selectFemale();
         }
+
 
         regPage.enterfirstname(firstName);
         regPage.enterlastName(lastName);
@@ -33,21 +35,38 @@ public class RegistrationTest extends BaseTest {
         regPage.enterconfirmPassword(confirmPassword);
         regPage.clickRegister();
 
-
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(5));
         SoftAssert softAssert = new SoftAssert();
-
 
         WebElement messageElement;
         String messageText;
 
         if (expectedResult.equalsIgnoreCase("successful")) {
+
             messageElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("result")));
             messageText = messageElement.getText();
+            System.out.println("Success message: " + messageText);
             softAssert.assertTrue(messageText.contains("Your registration completed"), "Success message not found");
+
         } else {
-            messageElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("field-validation-error")));
+
+            messageElement = wait.until(driver -> {
+                try {
+                    WebElement fieldError = driver.findElement(By.className("field-validation-error"));
+                    if (fieldError.isDisplayed()) return fieldError;
+                } catch (Exception ignored) {}
+
+                try {
+                    WebElement summaryError = driver.findElement(By.className("validation-summary-errors"));
+                    if (summaryError.isDisplayed()) return summaryError;
+                } catch (Exception ignored) {}
+
+                return null;
+            });
+
             messageText = messageElement.getText();
+            System.out.println("Error message: " + messageText);
+
             boolean errorFound = messageText.toLowerCase().contains("already exists") ||
                     messageText.toLowerCase().contains("required") ||
                     messageText.toLowerCase().contains("does not match") ||
@@ -60,10 +79,6 @@ public class RegistrationTest extends BaseTest {
             }
         }
 
-
         softAssert.assertAll();
     }
-
 }
-
-
