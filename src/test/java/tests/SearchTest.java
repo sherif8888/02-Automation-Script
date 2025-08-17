@@ -21,16 +21,14 @@ public class SearchTest extends BaseTest {
 
         String actualResult;
 
-        // التحقق من وجود Alert
         try {
             Alert alert = getDriver()
                     .switchTo().alert();
             String alertText = alert.getText();
             System.out.println("Popup message: " + alertText);
-            alert.accept(); // نغلق البوب أب
+            alert.accept();
             actualResult = "not_found";
         } catch (NoAlertPresentException e) {
-            // مفيش بوب أب، يبقى نكمل الفحص بالطريقة العادية
             if (searchPage.getResultsCount() > 0) {
                 actualResult = "found";
             } else {
@@ -38,7 +36,6 @@ public class SearchTest extends BaseTest {
             }
         }
 
-        // المقارنة
         if (actualResult.equalsIgnoreCase(expectedResult)) {
             System.out.println("✅ Test Passed - Expected and actual match: " + expectedResult);
         } else {

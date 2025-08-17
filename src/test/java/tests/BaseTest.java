@@ -17,7 +17,6 @@ import java.util.Date;
 
 public class BaseTest {
 
-    // نخزن الـ WebDriver لكل Thread
     private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
     public static WebDriver getDriver() {
@@ -46,7 +45,6 @@ public class BaseTest {
 
     @AfterMethod(alwaysRun = true)
     public void takeScreenshotOnFailure(ITestResult result) {
-        // اسم الاختبار لكل DataProvider row
         String testName = result.getMethod().getMethodName() + "_" + Arrays.toString(result.getParameters());
 
         if (result.getStatus() == ITestResult.FAILURE && getDriver() != null) {
