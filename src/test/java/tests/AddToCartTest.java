@@ -31,7 +31,7 @@ public class AddToCartTest extends BaseTest {
                 "Expected message not found! Actual: " + actualMessage);
 
         WebElement cartQty = getDriver().findElement(By.cssSelector("span.cart-qty"));
-        String qtyText = cartQty.getText(); // زي: (1)
+        String qtyText = cartQty.getText();
         softAssert.assertTrue(!qtyText.equals("(0)"), "Cart quantity did not increase!");
 
         softAssert.assertAll();

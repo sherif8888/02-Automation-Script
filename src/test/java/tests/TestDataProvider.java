@@ -58,9 +58,10 @@ public class TestDataProvider {
     public static Object[][] getCartData() {
         return new Object[][]{
                 {"https://demowebshop.tricentis.com/books", "The product has been added to your shopping cart"},
-                {"https://demowebshop.tricentis.com/computers", "The product has been added to your shopping cart"}
+                {"https://demowebshop.tricentis.com/notebooks", "The product has been added to your shopping cart"}
         };
     }
+
 
 
 }
