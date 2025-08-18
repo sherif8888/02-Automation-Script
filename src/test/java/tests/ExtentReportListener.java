@@ -2,7 +2,7 @@ package tests;
 
 import com.aventstack.extentreports.*;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-import com.aventstack.extentreports.MediaEntityBuilder;  // مهم عشان تحط الصور في التقرير
+import com.aventstack.extentreports.MediaEntityBuilder;
 import org.testng.*;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
